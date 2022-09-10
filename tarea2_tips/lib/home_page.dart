@@ -58,11 +58,24 @@ class _HomePageState extends State<HomePage> {
                   setState(() {});
                 }),
           ),
-          MaterialButton(
-            child: Text("CALCULATE"),
-            onPressed: null,
+          Container(
+            margin: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                MaterialButton(
+                  child: Text("CALCULATE"),
+                  onPressed: () {},
+                  color: Colors.green,
+                  textColor: Colors.white,
+                ),
+                Text(
+                  "Tip amount: \$20.00",
+                  textAlign: TextAlign.right,
+                ),
+              ],
+            ),
           ),
-          Text("Tip amount: \$20.00"),
         ],
       ),
     );
