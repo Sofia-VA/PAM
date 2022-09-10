@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,7 +24,16 @@ class _HomePageState extends State<HomePage> {
             leading: Icon(Icons.room_service),
             title: Padding(
               padding: EdgeInsets.only(right: 24),
-              child: TextField(),
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  label: Text("Cost of Service"),
+                ),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
+                ],
+              ),
             ),
           ),
           ListTile(
