@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           SizedBox(height: 14),
           ListTile(
-            leading: Icon(Icons.room_service),
+            leading: Icon(Icons.store),
             title: Padding(
               padding: EdgeInsets.only(right: 24),
               child: TextField(
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.dinner_dining),
+            leading: Icon(Icons.room_service),
             title: Text("How was the service?"),
           ),
           Container(
@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.credit_card),
+            leading: Icon(Icons.north_east),
             title: Text("Round up tip"),
             trailing: Switch(
                 value: roundUp,
