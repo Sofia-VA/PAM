@@ -9,7 +9,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // TODO: completar todo lo necesario
+  int? currentRadio;
+  var radioGroup = {0: 'Amazing (20%)', 1: 'Good (18%)', 2: 'Okay (15%)'};
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,12 @@ class _HomePageState extends State<HomePage> {
             leading: Icon(Icons.dinner_dining),
             title: Text("How was the service?"),
           ),
-          Text("Aqui agregar el GRUPO de radio buttons"),
+          Container(
+            margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
+            child: Column(
+              children: radioGroupGenerator(),
+            ),
+          ),
           ListTile(
             leading: Icon(Icons.credit_card),
             title: Text("Round up tip"),
@@ -57,5 +63,23 @@ class _HomePageState extends State<HomePage> {
 
   void _tipCalculation() {
     // TODO: completar
+  }
+
+  radioGroupGenerator() {
+    return radioGroup.entries
+        .map(
+          (radioElement) => ListTile(
+            leading: Radio(
+              value: radioElement.key,
+              groupValue: currentRadio,
+              onChanged: (int? selected) {
+                currentRadio = selected;
+                setState(() {});
+              },
+            ),
+            title: Text("${radioElement.value}"),
+          ),
+        )
+        .toList();
   }
 }
