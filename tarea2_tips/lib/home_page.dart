@@ -10,6 +10,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int? currentRadio;
+  bool roundUp = false;
   var radioGroup = {0: 'Amazing (20%)', 1: 'Good (18%)', 2: 'Okay (15%)'};
 
   @override
@@ -50,6 +51,12 @@ class _HomePageState extends State<HomePage> {
           ListTile(
             leading: Icon(Icons.credit_card),
             title: Text("Round up tip"),
+            trailing: Switch(
+                value: roundUp,
+                onChanged: (bool selected) {
+                  roundUp = selected;
+                  setState(() {});
+                }),
           ),
           MaterialButton(
             child: Text("CALCULATE"),
