@@ -20,7 +20,9 @@ class HomePage extends StatelessWidget {
           Expanded(
             child: Column(mainAxisSize: MainAxisSize.max, children: [
               AvatarGlow(
+                glowColor: Colors.deepPurpleAccent,
                 endRadius: 170,
+                animate: true,
                 child: Material(
                     shape: CircleBorder(),
                     clipBehavior: Clip.antiAliasWithSaveLayer,
