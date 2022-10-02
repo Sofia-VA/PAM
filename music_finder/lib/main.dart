@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'favorite_songs/bloc/favorite_songs_bloc.dart';
 import 'home/bloc/home_bloc.dart';
 import 'home/home_page.dart';
-import 'song/song_page.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(MultiBlocProvider(providers: [
+      BlocProvider(create: (context) => HomeBloc()),
+      BlocProvider(create: (context) => FavoriteSongsBloc()),
+    ], child: MyApp()));
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.purple,
           appBarTheme: AppBarTheme(color: Colors.purple[800]),
           iconTheme: IconThemeData(color: Colors.white)),
-      home: BlocProvider(create: (context) => HomeBloc(), child: HomePage()),
+      home: HomePage(),
     );
   }
 }

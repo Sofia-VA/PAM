@@ -22,7 +22,7 @@ class AudDRequest {
     var _response = await request.send();
     final respStr = await _response.stream.bytesToString();
 
-    if (_response.statusCode == 200) {
+    if (_response.statusCode == "success") {
       var _res = jsonDecode(respStr)["result"];
       if (_res == null) {
         throw Exception("Song not found");
@@ -43,6 +43,8 @@ class AudDRequest {
       };
 
       return _song;
+    } else {
+      throw Exception("${jsonDecode(respStr)["error"]["error_message"]}");
     }
   }
 }

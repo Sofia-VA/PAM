@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:music_finder/favorite_songs/bloc/favorite_songs_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SongPage extends StatelessWidget {
@@ -17,7 +19,12 @@ class SongPage extends StatelessWidget {
               }),
           title: const Text('Here you go!'),
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.favorite), onPressed: () {}),
+            IconButton(
+                icon: Icon(Icons.favorite),
+                onPressed: () {
+                  BlocProvider.of<FavoriteSongsBloc>(context)
+                      .add(AddFavoriteSongEvent(song: song));
+                }),
             Padding(padding: EdgeInsets.all(6))
           ],
         ),
