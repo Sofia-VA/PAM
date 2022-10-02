@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -17,11 +19,37 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       StartRecordingEvent event, Emitter<HomeState> emit) async {
     emit(RecordingState());
 
-    //TODO begin recording + permissions
-    await Future.delayed(Duration(seconds: 5));
+    final record = Record();
 
-    emit(RecordingErrorState(errorMsg: ':D'));
+    try {
+      if (await record.hasPermission()) {
+        // Start recording
+        await record.start(
+            encoder: AudioEncoder.aacLc, // by default
+            bitRate: 128000, // by default
+            samplingRate: 44100 // by default
+            );
+        await Future.delayed(Duration(seconds: 5));
+        final path = await record.stop();
 
-    // TODO Use record package
+        // Conversion to base64
+        if (path == null) throw new Exception();
+        File recordFile = File(path);
+        String encodedRecord = base64.encode(recordFile.readAsBytesSync());
+
+        // Load screen
+        emit(LoadingState());
+
+        //API Search
+
+      } else {
+        emit(RecordingErrorState(
+            errorMsg: 'Recording permissions are required'));
+      }
+    } catch (e) {
+      emit(RecordingErrorState(errorMsg: 'Recording failed: ${e}'));
+    }
+
+    print('Worked!');
   }
 }

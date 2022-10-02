@@ -18,10 +18,17 @@ class RecordingErrorState extends HomeState {
   List<Object> get props => [errorMsg];
 }
 
-class RecordingSuccessState extends HomeState {
+class SongSearchSuccessState extends HomeState {
   //TODO Recording format
-  final String recording;
+  final String song;
 
-  RecordingSuccessState({required this.recording});
-  List<Object> get props => [recording];
+  SongSearchSuccessState({required this.song});
+  List<Object> get props => [song];
+}
+
+class SongSearchFailedState extends HomeState {
+  final String msg;
+
+  SongSearchFailedState({required this.msg});
+  List<Object> get props => [msg];
 }

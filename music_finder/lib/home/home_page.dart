@@ -13,11 +13,15 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
-          if (state is RecordingSuccessState) {
+          if (state is SongSearchSuccessState) {
             // TODO
+          } else if (state is SongSearchFailedState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.msg)),
+            );
           } else if (state is RecordingErrorState) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("Error en la grabación")),
+              SnackBar(content: Text(state.errorMsg)),
             );
           }
         },
