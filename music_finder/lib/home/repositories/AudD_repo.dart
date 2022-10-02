@@ -34,11 +34,11 @@ class AudDRequest {
         "artist": _res["artist"],
         "release_date": _res["release_date"],
         "song_link": _res["song_link"],
-        "apple_music": _res["apple_music"]["url"] ?? _res["song_link"],
-        "spotify": _res["spotify"]["href"] ?? _res["song_link"],
-        "deezer": _res["deezer"]["link"] ?? _res["song_link"],
-        "artwork": _res["apple_music"]["artwork"]["url"] ??
-            _res["spotify"]["album"]["images"][0]["url"] ??
+        "apple_music": _res["apple_music"]?["url"] ?? _res["song_link"],
+        "spotify":
+            _res["spotify"]?["external_urls"]["spotify"] ?? _res["song_link"],
+        "deezer": _res["deezer"]?["link"] ?? _res["song_link"],
+        "artwork": _res["spotify"]["album"]["images"][0]["url"] ??
             _res["deezer"]["picture"],
       };
 

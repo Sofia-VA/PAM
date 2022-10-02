@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.purple,
           appBarTheme: AppBarTheme(color: Colors.purple[800]),
           iconTheme: IconThemeData(color: Colors.white)),
-      home: BlocProvider(create: (context) => HomeBloc(), child: SongPage()),
+      home: BlocProvider(create: (context) => HomeBloc(), child: HomePage()),
     );
   }
 }

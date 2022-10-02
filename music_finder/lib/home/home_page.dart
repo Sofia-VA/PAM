@@ -2,6 +2,7 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_finder/home/bloc/home_bloc.dart';
+import 'package:music_finder/song/song_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -14,7 +15,8 @@ class HomePage extends StatelessWidget {
       body: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
           if (state is SongSearchSuccessState) {
-            // TODO
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => SongPage(song: state.song)));
           } else if (state is SongSearchFailedState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.msg)),
