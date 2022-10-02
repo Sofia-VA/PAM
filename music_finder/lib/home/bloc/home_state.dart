@@ -19,8 +19,7 @@ class RecordingErrorState extends HomeState {
 }
 
 class SongSearchSuccessState extends HomeState {
-  //TODO Recording format
-  final String song;
+  final Map<String, dynamic> song;
 
   SongSearchSuccessState({required this.song});
   List<Object> get props => [song];

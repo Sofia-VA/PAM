@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -39,7 +37,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
         //API Search
         try {
-          var _song = (await AudDRequest().searchSong(path))["result"];
+          Map<String, dynamic> _song = (await AudDRequest().searchSong(path));
           emit(SongSearchSuccessState(song: _song));
         } catch (e) {
           emit(SongSearchFailedState(msg: '${e}'));
