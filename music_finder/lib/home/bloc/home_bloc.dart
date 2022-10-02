@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:music_finder/home/repositories/AudD_repo.dart';
 import 'package:record/record.dart';
 
 part 'home_event.dart';
@@ -31,25 +32,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             );
         await Future.delayed(Duration(seconds: 5));
         final path = await record.stop();
-
-        // Conversion to base64
         if (path == null) throw new Exception();
-        File recordFile = File(path);
-        String encodedRecord = base64.encode(recordFile.readAsBytesSync());
 
         // Load screen
         emit(LoadingState());
 
         //API Search
-
+        try {
+          var _song = (await AudDRequest().searchSong(path))["result"];
+          emit(SongSearchSuccessState(song: _song));
+        } catch (e) {
+          emit(SongSearchFailedState(msg: '${e}'));
+        }
       } else {
         emit(RecordingErrorState(
             errorMsg: 'Recording permissions are required'));
       }
     } catch (e) {
-      emit(RecordingErrorState(errorMsg: 'Recording failed: ${e}'));
+      emit(RecordingErrorState(errorMsg: 'Something failed: ${e}'));
     }
-
-    print('Worked!');
   }
 }

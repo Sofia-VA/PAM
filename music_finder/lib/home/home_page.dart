@@ -37,10 +37,14 @@ class HomePage extends StatelessWidget {
 
   Widget _loadingView() {
     return SafeArea(
-      child: Expanded(
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
+      child: Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -66,34 +70,29 @@ class HomePage extends StatelessWidget {
             backgroundColor: Colors.white,
           ),
         ),
-        SizedBox(height: 230),
       ],
     ));
   }
 
-  Expanded _recordButton(context, state) {
-    return Expanded(
-      child: Column(mainAxisSize: MainAxisSize.max, children: [
-        AvatarGlow(
-          glowColor: Colors.deepPurpleAccent,
-          endRadius: 170,
-          animate: state is RecordingState,
-          child: Material(
-              shape: CircleBorder(),
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              child: InkWell(
-                  onTap: () {
-                    BlocProvider.of<HomeBloc>(context)
-                        .add(StartRecordingEvent());
-                  },
-                  splashColor: Color.fromARGB(109, 54, 0, 96),
-                  child: Ink.image(
-                      fit: BoxFit.scaleDown,
-                      height: 200,
-                      image:
-                          AssetImage('assets/images/sound_waves_round.png')))),
-        ),
-      ]),
-    );
+  Column _recordButton(context, state) {
+    return Column(mainAxisSize: MainAxisSize.max, children: [
+      AvatarGlow(
+        glowColor: Colors.deepPurpleAccent,
+        endRadius: 170,
+        animate: state is RecordingState,
+        child: Material(
+            shape: CircleBorder(),
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: InkWell(
+                onTap: () {
+                  BlocProvider.of<HomeBloc>(context).add(StartRecordingEvent());
+                },
+                splashColor: Color.fromARGB(109, 54, 0, 96),
+                child: Ink.image(
+                    fit: BoxFit.scaleDown,
+                    height: 200,
+                    image: AssetImage('assets/images/sound_waves_round.png')))),
+      ),
+    ]);
   }
 }
