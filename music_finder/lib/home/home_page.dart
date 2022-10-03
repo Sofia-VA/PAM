@@ -1,6 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music_finder/favorite_songs/favorite_songs_page.dart';
 import 'package:music_finder/home/bloc/home_bloc.dart';
 import 'package:music_finder/favorite_songs/song_page.dart';
 
@@ -65,7 +66,10 @@ class HomePage extends StatelessWidget {
         SizedBox(height: 50),
         _recordButton(context, state),
         MaterialButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => FavoriteSongsPage()));
+          },
           shape: CircleBorder(),
           child: CircleAvatar(
             child: Icon(Icons.favorite, color: Colors.black),

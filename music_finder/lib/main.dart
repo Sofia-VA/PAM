@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.purple[800],
           primarySwatch: Colors.purple,
           appBarTheme: AppBarTheme(color: Colors.purple[800]),
+          splashColor: Colors.purple[800],
           iconTheme: IconThemeData(color: Colors.white)),
       home: HomePage(),
     );

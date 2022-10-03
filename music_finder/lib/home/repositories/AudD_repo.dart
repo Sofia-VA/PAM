@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:music_finder/utils/secrets.dart';
@@ -22,8 +23,9 @@ class AudDRequest {
     var _response = await request.send();
     final respStr = await _response.stream.bytesToString();
 
-    if (_response.statusCode == "success") {
+    if (_response.statusCode == HttpStatus.ok) {
       var _res = jsonDecode(respStr)["result"];
+
       if (_res == null) {
         throw Exception("Song not found");
       }
@@ -38,13 +40,14 @@ class AudDRequest {
         "spotify":
             _res["spotify"]?["external_urls"]["spotify"] ?? _res["song_link"],
         "deezer": _res["deezer"]?["link"] ?? _res["song_link"],
-        "artwork": _res["spotify"]["album"]["images"][0]["url"] ??
+        "artwork": _res["spotify"]?["album"]["images"][0]["url"] ??
             _res["deezer"]["picture"],
       };
 
       return _song;
     } else {
-      throw Exception("${jsonDecode(respStr)["error"]["error_message"]}");
+      throw Exception(
+          "${jsonDecode(respStr)["error"]["error_code"]}: ${jsonDecode(respStr)["error"]["error_message"]}");
     }
   }
 }

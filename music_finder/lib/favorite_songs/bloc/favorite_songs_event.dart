@@ -8,10 +8,21 @@ abstract class FavoriteSongsEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class GetFavoritesEvent extends FavoriteSongsEvent {}
+
 class AddFavoriteSongEvent extends FavoriteSongsEvent {
   final Map<String, dynamic> song;
 
   AddFavoriteSongEvent({required this.song});
+
+  @override
+  List<Object> get props => [song];
+}
+
+class RemoveFavoriteSongEvent extends FavoriteSongsEvent {
+  final Map<String, dynamic> song;
+
+  RemoveFavoriteSongEvent({required this.song});
 
   @override
   List<Object> get props => [song];
