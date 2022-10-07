@@ -7,7 +7,12 @@ class BooksInitial extends BooksState {}
 
 class BookSearchingState extends BooksState {}
 
-class BookFoundState extends BooksState {}
+class BookFoundState extends BooksState {
+  final List<dynamic> books;
+
+  BookFoundState({required this.books});
+  List<Object> get props => [books];
+}
 
 class BookNotFoundState extends BooksState {}
 

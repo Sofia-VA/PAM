@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/books_bloc.dart';
+import 'book_card.dart';
 
 class HomePage extends StatelessWidget {
   final searchController = TextEditingController();
@@ -47,7 +48,7 @@ class HomePage extends StatelessWidget {
     if (state is BookSearchingState) {
       _loadingView();
     } else if (state is BookFoundState) {
-      _booksResult();
+      _booksResults(state.books);
     } else if (state is BookNotFoundState) {
       return Center(child: Text("No book was found"));
     } else if (state is ConnectivityErrorState) {
@@ -61,7 +62,16 @@ class HomePage extends StatelessWidget {
     return Center(child: Text("Loading"));
   }
 
-  Widget _booksResult() {
-    return Center();
+  GridView _booksResults(books) {
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+      ),
+      itemCount: books.length,
+      itemBuilder: (BuildContext context, int index) {
+        return GestureDetector(
+            onTap: () {}, child: BookCard(book: books[index]));
+      },
+    );
   }
 }
