@@ -30,7 +30,11 @@ class HomePage extends StatelessWidget {
                       controller: searchController,
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
-                            icon: Icon(Icons.search), onPressed: () {}),
+                            icon: Icon(Icons.search),
+                            onPressed: () {
+                              BlocProvider.of<BooksBloc>(context).add(
+                                  SearchBookEvent(book: searchController.text));
+                            }),
                         border: OutlineInputBorder(),
                         label: Text("Ingresa título"),
                       ),
