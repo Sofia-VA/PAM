@@ -21,6 +21,7 @@ class HomePage extends StatelessWidget {
             // TODO: implement listener
           },
           builder: (context, state) {
+            print("BUILDING state: ${state}");
             return Container(
                 margin: EdgeInsets.all(10),
                 padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -39,8 +40,11 @@ class HomePage extends StatelessWidget {
                         label: Text("Ingresa título"),
                       ),
                     ),
+                    (state is BookFoundState)
+                        ? SizedBox(height: 30)
+                        : SizedBox(),
                     Expanded(
-                      child: _getChild(state),
+                      child: _getChild(context, state),
                     ),
                   ],
                 ));
@@ -48,11 +52,12 @@ class HomePage extends StatelessWidget {
         ));
   }
 
-  Widget _getChild(state) {
+  Widget _getChild(context, state) {
+    print("Getting child from: ${state}");
     if (state is BookSearchingState) {
-      _loadingView();
+      return _loadingView();
     } else if (state is BookFoundState) {
-      _booksResults(state.books);
+      return _booksResults(context, state.books);
     } else if (state is BookNotFoundState) {
       return Center(child: Text("No book was found"));
     } else if (state is ConnectivityErrorState) {
@@ -66,10 +71,14 @@ class HomePage extends StatelessWidget {
     return Center(child: Text("Loading"));
   }
 
-  GridView _booksResults(books) {
+  GridView _booksResults(context, books) {
     return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 20,
         crossAxisCount: 2,
+        childAspectRatio: MediaQuery.of(context).size.width /
+            (MediaQuery.of(context).size.height / 1.5),
       ),
       itemCount: books.length,
       itemBuilder: (BuildContext context, int index) {
