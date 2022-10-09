@@ -15,6 +15,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text('Free to play Library'),
         ),
@@ -35,6 +36,7 @@ class HomePage extends StatelessWidget {
                         suffixIcon: IconButton(
                             icon: Icon(Icons.search),
                             onPressed: () {
+                              FocusManager.instance.primaryFocus?.unfocus();
                               BlocProvider.of<BooksBloc>(context).add(
                                   SearchBookEvent(book: searchController.text));
                             }),
@@ -61,7 +63,18 @@ class HomePage extends StatelessWidget {
     } else if (state is BookFoundState) {
       return _booksResults(context, state.books);
     } else if (state is BookNotFoundState) {
-      return Center(child: Text("No book was found"));
+      return Center(
+        child: SingleChildScrollView(
+          child: Column(children: [
+            Image.asset(
+              'assets/images/books_stack.png',
+              scale: 2.2,
+            ),
+            SizedBox(height: 20),
+            Text("No book was found")
+          ]),
+        ),
+      );
     } else if (state is ConnectivityErrorState) {
       return Center(child: Text(state.errorMsg));
     }
