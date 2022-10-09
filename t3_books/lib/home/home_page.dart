@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_shimmer/flutter_shimmer.dart';
+import 'package:t3_books/home/book_page.dart';
 
 import 'bloc/books_bloc.dart';
 import 'book_card.dart';
@@ -15,7 +16,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Librería free to play'),
+          title: const Text('Free to play Library'),
         ),
         body: BlocConsumer<BooksBloc, BooksState>(
           listener: (context, state) {
@@ -38,7 +39,7 @@ class HomePage extends StatelessWidget {
                                   SearchBookEvent(book: searchController.text));
                             }),
                         border: OutlineInputBorder(),
-                        label: Text("Ingresa título"),
+                        label: Text("Type book title"),
                       ),
                     ),
                     (state is BookFoundState)
@@ -111,7 +112,11 @@ class HomePage extends StatelessWidget {
       itemCount: books.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
-            onTap: () {}, child: BookCard(book: books[index]));
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => BookPage(book: books[index])));
+            },
+            child: BookCard(book: books[index]));
       },
     );
   }

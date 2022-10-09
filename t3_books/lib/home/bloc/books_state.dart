@@ -5,6 +5,8 @@ abstract class BooksState {}
 
 class BooksInitial extends BooksState {}
 
+class ExpandedBookDescriptionState extends BooksState {}
+
 class BookSearchingState extends BooksState {}
 
 class BookFoundState extends BooksState {
