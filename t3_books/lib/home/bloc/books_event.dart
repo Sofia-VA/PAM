@@ -9,12 +9,3 @@ class SearchBookEvent extends BooksEvent {
   SearchBookEvent({required this.book});
   List<Object> get props => [book];
 }
-
-class ExpandBookDescriptionEvent extends BooksEvent {}
-
-class ShareBookEvent extends BooksEvent {
-  final Map<String, dynamic> book;
-
-  ShareBookEvent({required this.book});
-  List<Object> get props => [book];
-}

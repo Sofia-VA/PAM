@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:t3_books/home/bloc/books_bloc.dart';
+import 'package:share_plus/share_plus.dart';
 
-class BookPage extends StatelessWidget {
+class BookPage extends StatefulWidget {
   final Map<String, dynamic> book;
-  const BookPage({super.key, required this.book});
+  BookPage({super.key, required this.book});
 
+  @override
+  State<BookPage> createState() => _BookPageState();
+}
+
+class _BookPageState extends State<BookPage> {
+  bool expand = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +24,8 @@ class BookPage extends StatelessWidget {
             IconButton(
                 icon: Icon(Icons.share),
                 onPressed: () {
-                  context.read<BooksBloc>().add(ShareBookEvent(book: book));
+                  Share.share(
+                      "Check out ${widget.book["title"]}! pages: ${widget.book["pages"]}");
                 }),
             Padding(padding: EdgeInsets.all(6))
           ],
@@ -33,9 +39,9 @@ class BookPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  book["cover"] != null
+                  widget.book["cover"] != null
                       ? Image.network(
-                          book["cover"],
+                          widget.book["cover"],
                           fit: BoxFit.cover,
                           height: MediaQuery.of(context).size.height / 3,
                         )
@@ -46,55 +52,53 @@ class BookPage extends StatelessWidget {
                         ),
                   SizedBox(height: 30),
                   Text(
-                    book["title"],
+                    widget.book["title"],
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 30),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(book["publishedDate"],
+                    child: Text(widget.book["publishedDate"],
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w600)),
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text("Pages: ${book["pages"]}",
+                    child: Text("Pages: ${widget.book["pages"]}",
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w400)),
                   ),
                   SizedBox(height: 10),
                   GestureDetector(
                     onTap: () {
-                      context
-                          .read<BooksBloc>()
-                          .add(ExpandBookDescriptionEvent());
+                      expand = !expand;
+                      setState(() {});
                     },
                     child: Row(
                       children: [
-                        Expanded(child: BlocBuilder<BooksBloc, BooksState>(
-                            builder: (context, state) {
-                          if (state is ExpandedBookDescriptionState) {
-                            return Text(book["description"],
-                                style: TextStyle(
-                                    fontSize: 15, fontStyle: FontStyle.italic),
-                                textAlign: TextAlign.justify);
-                          } else {
-                            return Text(
-                              book["description"],
-                              style: TextStyle(
-                                  fontSize: 15, fontStyle: FontStyle.italic),
-                              textAlign: TextAlign.justify,
-                              maxLines: 6,
-                              overflow: TextOverflow.ellipsis,
-                            );
-                          }
-                        })),
+                        Expanded(child: _toggleDescription()),
                       ],
                     ),
                   ),
                 ]),
           ),
         ));
+  }
+
+  _toggleDescription() {
+    if (expand == true) {
+      return Text(widget.book["description"],
+          style: TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
+          textAlign: TextAlign.justify);
+    } else {
+      return Text(
+        widget.book["description"],
+        style: TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
+        textAlign: TextAlign.justify,
+        maxLines: 6,
+        overflow: TextOverflow.ellipsis,
+      );
+    }
   }
 }
