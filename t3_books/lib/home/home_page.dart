@@ -19,10 +19,7 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Free to play Library'),
         ),
-        body: BlocConsumer<BooksBloc, BooksState>(
-          listener: (context, state) {
-            // TODO: implement listener
-          },
+        body: BlocBuilder<BooksBloc, BooksState>(
           builder: (context, state) {
             print("BUILDING state: ${state}");
             return Container(
@@ -43,6 +40,10 @@ class HomePage extends StatelessWidget {
                         border: OutlineInputBorder(),
                         label: Text("Type book title"),
                       ),
+                      onSubmitted: (value) {
+                        BlocProvider.of<BooksBloc>(context)
+                            .add(SearchBookEvent(book: searchController.text));
+                      },
                     ),
                     (state is BookFoundState)
                         ? SizedBox(height: 30)
