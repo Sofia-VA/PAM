@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_shimmer/flutter_shimmer.dart';
 
 import 'bloc/books_bloc.dart';
 import 'book_card.dart';
@@ -68,7 +69,34 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _loadingView() {
-    return Center(child: Text("Loading"));
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 20),
+          PlayStoreShimmer(
+            hasBottomSecondLine: false,
+            beginAlign: Alignment.topRight,
+            padding: EdgeInsets.all(0),
+            margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
+          ),
+          SizedBox(height: 20),
+          PlayStoreShimmer(
+            hasBottomSecondLine: false,
+            beginAlign: Alignment.topRight,
+            padding: EdgeInsets.all(0),
+            margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
+          ),
+          SizedBox(height: 20),
+          PlayStoreShimmer(
+            hasBottomSecondLine: false,
+            beginAlign: Alignment.topRight,
+            padding: EdgeInsets.all(0),
+            margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
+          ),
+        ],
+      ),
+    );
   }
 
   GridView _booksResults(context, books) {
