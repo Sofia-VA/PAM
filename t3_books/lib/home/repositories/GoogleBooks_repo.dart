@@ -7,6 +7,7 @@ import 'package:t3_books/utils/secrets.dart';
 class GoogleBooksRequest {
   static final GoogleBooksRequest _singleton = GoogleBooksRequest._internal();
   final String _API_URL = 'https://www.googleapis.com/books/v1/volumes/';
+  final int maxResults = 20;
 
   factory GoogleBooksRequest() {
     return _singleton;
@@ -15,7 +16,13 @@ class GoogleBooksRequest {
   GoogleBooksRequest._internal();
 
   Future searchBook(String query) async {
-    var _url = _API_URL + '?q=' + query + '&key=' + API_KEY;
+    var _url = _API_URL +
+        '?q=' +
+        query +
+        '&maxResults=' +
+        maxResults.toString() +
+        '&key=' +
+        API_KEY;
 
     var response = await get(Uri.parse(_url));
     var respStr = jsonDecode(response.body);
@@ -33,7 +40,7 @@ class GoogleBooksRequest {
         bookMap = {
           "id": book["id"],
           "title": book["volumeInfo"]["title"],
-          "publishedDate": book["volumeInfo"]["publishedDate"],
+          "publishedDate": book["volumeInfo"]["publishedDate"] ?? "-",
           "pages": book["volumeInfo"]["pageCount"] ?? "-",
           "cover": book["volumeInfo"]["imageLinks"]?["thumbnail"],
           "description": book["volumeInfo"]["description"] ?? "-",
