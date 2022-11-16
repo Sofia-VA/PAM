@@ -1,14 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music_finder/login/login.dart';
 
 import 'favorite_songs/bloc/favorite_songs_bloc.dart';
 import 'home/bloc/home_bloc.dart';
 import 'home/home_page.dart';
 
-void main() => runApp(MultiBlocProvider(providers: [
-      BlocProvider(create: (context) => HomeBloc()),
-      BlocProvider(create: (context) => FavoriteSongsBloc()),
-    ], child: MyApp()));
+void main() async {
+  // Incializar Firebase
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  // Correr App
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(create: (context) => HomeBloc()),
+    BlocProvider(create: (context) => FavoriteSongsBloc()),
+  ], child: MyApp()));
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -24,7 +33,8 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppBarTheme(color: Colors.purple[800]),
           splashColor: Colors.purple[800],
           iconTheme: IconThemeData(color: Colors.white)),
-      home: HomePage(),
+      home:
+          FirebaseAuth.instance.currentUser == null ? LoginPage() : HomePage(),
     );
   }
 }
