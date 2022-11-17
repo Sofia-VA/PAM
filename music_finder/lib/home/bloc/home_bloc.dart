@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:music_finder/home/repositories/AudD_repo.dart';
 import 'package:record/record.dart';
+
+import '../../utils/repositories/AudD_repo.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';

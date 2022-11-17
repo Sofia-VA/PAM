@@ -21,6 +21,7 @@ class AudDRequest {
       ..files.add(await http.MultipartFile.fromPath('file', path));
 
     var _response = await request.send();
+    print(_response);
     final respStr = await _response.stream.bytesToString();
 
     if (_response.statusCode == HttpStatus.ok) {
