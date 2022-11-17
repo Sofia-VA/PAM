@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
       body: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
           if (state is SongSearchSuccessState) {
-            Navigator.of(context).push(MaterialPageRoute(
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (context) => SongPage(song: state.song)));
           } else if (state is SongSearchFailedState) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
         _recordButton(context, state),
         MaterialButton(
           onPressed: () {
-            Navigator.of(context).push(
+            Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => FavoriteSongsPage()));
           },
           shape: CircleBorder(),
