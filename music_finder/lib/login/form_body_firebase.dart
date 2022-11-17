@@ -25,7 +25,6 @@ class FormBodyFirebase extends StatelessWidget {
           footerBuilder: (context, action) {
             return Column(
               children: [
-                Text(FirebaseAuth.instance.currentUser.toString()),
                 SizedBox(height: 20),
                 Text('By signing in, you accept to our terms and conditions'),
               ],
