@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:music_finder/favorite_songs/song_card.dart';
 
+import '../login/login.dart';
 import 'bloc/favorite_songs_bloc.dart';
 
 class FavoriteSongsPage extends StatelessWidget {
@@ -16,6 +19,22 @@ class FavoriteSongsPage extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             }),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () async {
+                // print(FirebaseAuth.instance.currentUser.toString());
+                await GoogleSignIn().signOut();
+                await FirebaseAuth.instance.signOut();
+                // print('\n\n');
+                // print(FirebaseAuth.instance.currentUser.toString());
+
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+
+                //BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
+              })
+        ],
       ),
       body: BlocConsumer<FavoriteSongsBloc, FavoriteSongsState>(
           listener: (context, state) {
