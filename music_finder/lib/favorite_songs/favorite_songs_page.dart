@@ -22,17 +22,8 @@ class FavoriteSongsPage extends StatelessWidget {
         actions: [
           IconButton(
               icon: Icon(Icons.logout),
-              onPressed: () async {
-                // print(FirebaseAuth.instance.currentUser.toString());
-                await GoogleSignIn().signOut();
-                await FirebaseAuth.instance.signOut();
-                // print('\n\n');
-                // print(FirebaseAuth.instance.currentUser.toString());
-
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => LoginPage()));
-
-                //BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
+              onPressed: () {
+                showAlertDialog(context);
               })
         ],
       ),
@@ -113,4 +104,39 @@ class FavoriteSongsPage extends StatelessWidget {
               ));
         });
   }
+}
+
+showAlertDialog(BuildContext context) {
+  Widget cancelButton = TextButton(
+    child: Text("Cancel"),
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
+  );
+  Widget removeButton = TextButton(
+    child: Text("LogOut"),
+    onPressed: () async {
+      await GoogleSignIn().signOut();
+      await FirebaseAuth.instance.signOut();
+
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => LoginPage()));
+    },
+  );
+
+  AlertDialog alert = AlertDialog(
+    title: Text("Notice"),
+    content: Text("Would you like to logout?"),
+    actions: [
+      cancelButton,
+      removeButton,
+    ],
+  );
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
