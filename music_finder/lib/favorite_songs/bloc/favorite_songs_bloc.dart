@@ -14,6 +14,7 @@ class FavoriteSongsBloc extends Bloc<FavoriteSongsEvent, FavoriteSongsState> {
     on<AddFavoriteSongEvent>(_addSong);
     on<GetFavoritesEvent>(_getSongs);
     on<RemoveFavoriteSongEvent>(_removeSong);
+    on<ResetStateEvent>(_resetState);
   }
 
   Future<void> _createUserCollectionFirebase(String uid) async {
@@ -132,5 +133,10 @@ class FavoriteSongsBloc extends Bloc<FavoriteSongsEvent, FavoriteSongsState> {
     // Get user data
     var docsRef = await queryUser.get();
     return docsRef.data()?["favoriteSongs"];
+  }
+
+  FutureOr<void> _resetState(
+      ResetStateEvent event, Emitter<FavoriteSongsState> emit) {
+    emit(FavoriteSongsInitial());
   }
 }

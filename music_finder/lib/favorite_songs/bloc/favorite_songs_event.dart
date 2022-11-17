@@ -8,6 +8,8 @@ abstract class FavoriteSongsEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class ResetStateEvent extends FavoriteSongsEvent {}
+
 class GetFavoritesEvent extends FavoriteSongsEvent {}
 
 class AddFavoriteSongEvent extends FavoriteSongsEvent {
